@@ -2,12 +2,13 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { Card, BreadcrumbItem, CardImg, CardImgOverlay, Breadcrumb, CardTitle} from 'reactstrap';
 import { Loading } from './LoadingComponent';
+import {baseURL} from '../shared/BaseURL';
 
 function MenuCompo (props) {
     return(
         <Card>
             <Link to={`/menu/${props.dish.id}`}>
-            <CardImg width="100%" src={props.dish.image} alt={props.dish.name}/>
+            <CardImg width="100%" src={baseURL + props.dish.image} alt={props.dish.name}/>
             <CardImgOverlay>
             <CardTitle> {props.dish.name}</CardTitle>
             </CardImgOverlay>
