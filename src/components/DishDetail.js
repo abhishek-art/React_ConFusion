@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom';
 import {LocalForm, Control, Errors} from 'react-redux-form';
 import {Loading} from './LoadingComponent';
 import {baseURL} from '../shared/BaseURL';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+
 
 const required = (val) => val && val.length;
 const maxLength = (len)=> (val) => !(val) || (val.length <= len)
@@ -113,26 +115,37 @@ class CommentForm extends Component {
     function RenderDish({dish}) {
         return(
             <div className="col-12 col-md-5 m-1">
+                <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                 <Card>
                     <CardImg width="100%" src={baseURL + dish.image} alt={dish.name}/>
                     <CardTitle> {dish.name}</CardTitle>
                     <CardText>{dish.description}</CardText>
                 </Card>
+                </FadeTransform>
             </div>
         )
     }
 
     function RenderComments({dr, postComment, dishId}){
-        const com = dr.map((c) => {
+        const com = 
+        <Stagger in>
+         {dr.map((c) => {
             return (
                 <div className="container">
                     <ul className="list list-unstyled">
+                        <Fade in>
                         <li>{c.comment}</li>
                         <li>-- {c.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(c.date)))}</li>
+                        </Fade>
                     </ul>
                 </div>
             )
-        })
+        })}
+        </Stagger>
 
         return(<div>
             {com}
